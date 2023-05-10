@@ -72,8 +72,9 @@ function checkAnswer(answers) {
     console.log("correct answer = ", questions[qIndex].answer);
 
     if (answers === questions[qIndex].answer) {
-        //TODO: update msg  and add a line above message with <hr /> 
         console.log("send message Correct!");
+        //TODO: THIS IS NOT WORKING! update msg  and add a line above message with <hr />   
+        document.getElementById('answers').innerHTML += `<h4>Correct!</h4><div id="correct-msg"></div>`;
         }
     else {
         secondsLeft = secondsLeft - 10;
@@ -91,23 +92,22 @@ function gameOver() {
 
     //TODO: left-justify this screen
     main.innerHTML = `<h1>All done!</h1><div id="all-done"></div>`;
-    document.getElementById('all-done').innerHTML = `<h2>Your final score is ${secondsLeft}</h2><div id="final-score"></div>`;
+    document.getElementById('all-done').innerHTML += `<h2>Your final score is ${secondsLeft}</h2><div id="final-score"></div>`;
 
-    //create box to input initials 
-    document.getElementById('final-score').innerHTML = `<label for="initials">Enter initials: </label><input type="text" id="initials" name="initials"></input>`;
+    //create box to input initials  - use submit special type of input?
+    document.getElementById('all-done').innerHTML += `<label for="initials">Enter initials: </label><input type="text" id="initials" name="initials"></input>`;
     
-    //TODO: create submit button   document.getElementById("nameAndScore").value
-    //var nameScore;
-    //document.getElementById('nameAndScore').innerHTML = `<button onclick="submitScore('${nameScore}')">${nameScore}</button>`;
-    //document.getElementById('nameAndScore').innerHTML += `<button onclick="submitScore('${document.getElementById("nameAndScore").value}')">${document.getElementById("nameAndScore").value}</button>`;
+    //TODO: create submit button
+    document.getElementById('all-done').innerHTML += `<button onclick="submitScore()">Submit</button>`;
+
 }
 
-function submitScore(currentNameScore) {
-    console.log("called submitScore with " +  currentNameScore);
+function submitScore() {
+    console.log("called submitScore with " +  document.getElementById("initials").value);
 
 //     var playerScore = {
 //         player: initials,
-//         score: finalScore,
+//         score: secondsLeft,
 //       };
 //     //Will said not to do this but instead just save all scores; not sorted
 //     // Use JSON.parse() to convert text to JavaScript object
