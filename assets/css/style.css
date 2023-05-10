@@ -17,7 +17,9 @@
   }
 
 main {
-    margin: 0 40px;
+  width: 80%;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .large-font {
@@ -36,3 +38,18 @@ main {
     padding: 5px;  
   }
   
+
+  button {
+    background-color: aqua;
+    font-size: 24px;
+    border-radius: 8px;
+    padding: 5px;  
+    margin: 5px;
+  }
+
+#answers {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+}
