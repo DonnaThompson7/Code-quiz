@@ -22,7 +22,7 @@ function startQuiz() {
         console.log("called startQuiz");
     buttonViewHighscores.Disabled = true;
         console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
-    secondsLeft = 75;
+    secondsLeft = 30;
     timerElement.textContent = secondsLeft;
     gameIsOver = false;
     //start timer
@@ -58,25 +58,26 @@ function askQuestions() {
         multipleChoices.forEach(ans => {
             document.getElementById('answers').innerHTML += `<button onclick="checkAnswer('${ans}')">${ans}</button>`
         });
-    } else {
-        //write counts to local storage
+    } 
+    else {
+        //TODO: write counts to local storage?
         console.log("exiting askQuestions and calling gameOver");
         gameIsOver = true; 
         gameOver();
     }
 }
 
-
 function checkAnswer(answers) {
     console.log("called checkAnswer", answers);
     console.log("correct answer = ", questions[qIndex].answer);
 
     if (answers === questions[qIndex].answer) {
-        //update msg  and add a line above message with <hr /> 
+        //TODO: update msg  and add a line above message with <hr /> 
         console.log("send message Correct!");
         }
     else {
         secondsLeft = secondsLeft - 10;
+        //TODO: update msg  and add a line above message with <hr /> 
         console.log("send message Incorrect!");
         }
     
@@ -87,22 +88,23 @@ function checkAnswer(answers) {
 function gameOver() {
     console.log("called gameOver");
     gameIsOver = true;
-    instructionsOrQuestion.textContent = "All done!"; 
+
+    //TODO: left-justify this screen
     main.innerHTML = `<h1>All done!</h1><div id="all-done"></div>`;
-    document.getElementById('all-done').innerHTML = `<h2>Your final score is ${secondsLeft}</h2>`;
+    document.getElementById('all-done').innerHTML = `<h2>Your final score is ${secondsLeft}</h2><div id="final-score"></div>`;
 
     //create box to input initials 
-    //document.createElement("form")
-    //create submit button
-    //buttonSubmit = document.createElement("button")
-    //main.appendChild(buttonSubmit);
-        //when to use .innerHTML ??
-    //listen for Submit button 
-    //buttonSubmit.addEventListener("click", submitScore);
+    document.getElementById('final-score').innerHTML = `<label for="initials">Enter initials: </label><input type="text" id="initials" name="initials"></input>`;
+    
+    //TODO: create submit button   document.getElementById("nameAndScore").value
+    //var nameScore;
+    //document.getElementById('nameAndScore').innerHTML = `<button onclick="submitScore('${nameScore}')">${nameScore}</button>`;
+    //document.getElementById('nameAndScore').innerHTML += `<button onclick="submitScore('${document.getElementById("nameAndScore").value}')">${document.getElementById("nameAndScore").value}</button>`;
 }
 
-function submitScore() {
-    console.log("called submitScore");
+function submitScore(currentNameScore) {
+    console.log("called submitScore with " +  currentNameScore);
+
 //     var playerScore = {
 //         player: initials,
 //         score: finalScore,
