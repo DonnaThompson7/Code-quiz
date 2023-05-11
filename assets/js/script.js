@@ -60,7 +60,6 @@ function askQuestions() {
         });
     } 
     else {
-        //TODO: write counts to local storage?
         console.log("exiting askQuestions and calling gameOver");
         gameIsOver = true; 
         gameOver();
@@ -103,26 +102,29 @@ function gameOver() {
 }
 
 function submitScore() {
-    console.log("called submitScore with " +  document.getElementById("initials").value);
+    var initials = document.getElementById("initials").value;
+    console.log("called submitScore with " +  initials + " and " + secondsLeft);
+    var playerScore = {
+        currentInitials: initials,
+        currentScore: secondsLeft
+        };
+    console.log("playerScore: " +  playerScore);
 
-//     var playerScore = {
-//         player: initials,
-//         score: secondsLeft,
-//       };
-//     //Will said not to do this but instead just save all scores; not sorted
-//     // Use JSON.parse() to convert text to JavaScript object
-//     highScore = JSON.parse(localStorage.getItem("highScore"));
-//     if (highScore === null) {
-//         localStorage.setItem("highScore", JSON.stringify(playerScore));
-//     } else if (playerScore.score > highScore.score)
-//         // Use .setItem() to store object in storage and JSON.stringify to convert it as a string
-//         localStorage.setItem("highScore", JSON.stringify(playerScore));
-    //     viewHighscores(); 
+    var storagePlayerScores = JSON.parse(window.localStorage.getItem("playerScores"));
+    console.log("storagePlayerScores: " +  storagePlayerScores);
+
+    if (storagePlayerScores === null) {
+            storagePlayerScores = playerScore;
+        } 
+        else {
+            storagePlayerScores.push(playerScore);
+        };
+    window.localStorage.setItem("playerScores", JSON.stringify(storagePlayerScores));
 }
 
 function viewHighscores() {
     console.log("called viewHighscores");
-    instructionsOrQuestion.textContent = "Highscores";
+    //instructionsOrQuestion.textContent = "Highscores";
     //get highScore string from local storage
     //highScore = JSON.parse(localStorage.getItem("highScore"));
 
