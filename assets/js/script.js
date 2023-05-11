@@ -10,20 +10,20 @@ var gameIsOver = false;
 var highScore;
 var qIndex = 0;
 var storagePlayerScores;
+buttonViewHighscores.Disabled = false;
 
-//these 3 buttons haven't been created yet; is this assignment needed?
-var buttonSubmit;               // = document.querySelector(".submit-button");
-var buttonGoBack;               //= document.querySelector(".go-back-button");
-var buttonClearHighscores;      // = document.querySelector(".clear-highscores-button");
 
-//set up questions array of 5 question objects. Each question obj has 1 question and 4 answers
+//separate html file contains a questions array of 5 question objects. 
+//Each question obj has 1 question, 4 answers, and 1 correct answer
 
 
 function startQuiz() {
     console.log("called startQuiz");
-    //disable buttonViewHighscores
+
+    //disable buttonViewHighscores while actively playing game
     buttonViewHighscores.Disabled = true;
     console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
+
     secondsLeft = 30;
     timerElement.textContent = secondsLeft;
     gameIsOver = false;
@@ -49,7 +49,6 @@ function setTimer() {
 
 function askQuestions() {
     console.log("called askQuestions");
-    // console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
     
     //check qIndex
     if (qIndex < questions.length) {
@@ -89,6 +88,7 @@ function checkAnswer(answers) {
 function gameOver() {
     console.log("called gameOver");
     gameIsOver = true;
+    
     //enable buttonViewHighscores
     buttonViewHighscores.Disabled = false;
     console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
