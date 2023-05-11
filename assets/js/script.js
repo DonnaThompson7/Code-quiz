@@ -10,7 +10,7 @@ var gameIsOver = false;
 var highScore;
 var qIndex = 0;
 var storagePlayerScores;
-buttonViewHighscores.Disabled = false;
+buttonViewHighscores.disabled = false;
 
 
 //separate html file contains a questions array of 5 question objects. 
@@ -21,8 +21,8 @@ function startQuiz() {
     console.log("called startQuiz");
 
     //disable buttonViewHighscores while actively playing game
-    buttonViewHighscores.Disabled = true;
-    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
+    buttonViewHighscores.disabled = true;
+    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 
     secondsLeft = 30;
     timerElement.textContent = secondsLeft;
@@ -88,10 +88,10 @@ function checkAnswer(answers) {
 function gameOver() {
     console.log("called gameOver");
     gameIsOver = true;
-    
+
     //enable buttonViewHighscores
-    buttonViewHighscores.Disabled = false;
-    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
+    buttonViewHighscores.disabled = false;
+    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 
     //TODO: left-justify this screen
     main.innerHTML = `<h1>All done!</h1><div id="all-done"></div>`;
@@ -170,8 +170,8 @@ function clearHighscores() {
 function goBack() {
     console.log("called goBack");
     //enable buttonViewHighscores
-    buttonViewHighscores.Disabled = false;
-    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
+    buttonViewHighscores.disabled = false;
+    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 
     //re-display all of initial screen!
     location.reload();
@@ -198,8 +198,8 @@ buttonViewHighscores.addEventListener("click", viewHighscores);
 function init() {
     console.log("called init");
     //enable buttonViewHighscores
-    buttonViewHighscores.Disabled = false;
-    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
+    buttonViewHighscores.disabled = false;
+    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 }
   
 init();
