@@ -9,6 +9,7 @@ var timerInterval;
 var gameIsOver = false; 
 var highScore;
 var qIndex = 0;
+var storagePlayerScores;
 
 //these 3 buttons haven't been created yet; is this assignment needed?
 var buttonSubmit;               // = document.querySelector(".submit-button");
@@ -35,13 +36,13 @@ function setTimer() {
     // Sets interval in timerInterval variable
     var timerInterval = setInterval(function() {
         secondsLeft--;
-        timerElement.textContent = secondsLeft;
 
         if (secondsLeft === 0 || gameIsOver) {
             // Stops execution, clear timer, and call gameOver()
             clearInterval(timerInterval);
             gameOver();
         } 
+        timerElement.textContent = secondsLeft;
     }, 1000);
 }
 
@@ -62,7 +63,6 @@ function askQuestions() {
     else {
         console.log("exiting askQuestions and calling gameOver");
         gameIsOver = true; 
-        gameOver();
     }
 }
 
@@ -108,10 +108,12 @@ function submitScore() {
         currentInitials: initials,
         currentScore: secondsLeft
         };
-    console.log("playerScore: " +  playerScore);
+    console.log("playerScore: " +  playerScore.currentInitials + " - " + playerScore.currentScore);
 
-    var storagePlayerScores = JSON.parse(window.localStorage.getItem("playerScores"));
-    console.log("storagePlayerScores: " +  storagePlayerScores);
+    storagePlayerScores = JSON.parse(window.localStorage.getItem("playerScores"));
+    if (storagePlayerScores === null) {
+        storagePlayerScores = []
+    } 
 
     if (storagePlayerScores === null) {
             storagePlayerScores = playerScore;
@@ -120,28 +122,48 @@ function submitScore() {
             storagePlayerScores.push(playerScore);
         };
     window.localStorage.setItem("playerScores", JSON.stringify(storagePlayerScores));
+    viewHighscores();
 }
+
 
 function viewHighscores() {
     console.log("called viewHighscores");
-    //instructionsOrQuestion.textContent = "Highscores";
-    //get highScore string from local storage
-    //highScore = JSON.parse(localStorage.getItem("highScore"));
+    main.innerHTML = `<h1>Highscores</h1><div id="high-scores"></div>`;
+    document.getElementById('high-scores').innerHTML += `<div id="displayed-scores-container"></div>`;
 
-    // display high score
-    //create 2 buttons: Go Back and Clear Highscores 
-        //use document.createElement("button", ".go-back-button") 
-        //listen for Go Back button 
-        //goBack.addEventListener("click", goBack);
-        //listen for Clear Highscores button 
-        //buttonClearHighscores.addEventListener("click", clearHighscores);
+    for (i=0; i < storagePlayerScores.length; i++) {
+        console.log("storagePlayerScores: " +  storagePlayerScores[i].currentInitials + " - " + storagePlayerScores[i].currentScore);
+        var tempString = storagePlayerScores[i].currentInitials + " - " + storagePlayerScores[i].currentScore;
+        document.getElementById('displayed-scores-container').innerHTML += `<h2>${tempString}</h2><div id="displayed-scores"></div>`;
+    }
+
+    // style high score with background color
+
+    //create Go Back button and listen for click 
+    document.getElementById('high-scores').innerHTML += `<button onclick="goBack()">Go Back</button>`;
+
+    //create 'Clear Highscores' and listen for click 
+    document.getElementById('high-scores').innerHTML += `<button onclick="clearHighscores()">Clear Highscores</button>`;
 }
 
-// function goBack() {
-//     buttonViewHighscores.Disabled = false;
-//     //re-display all of initial screen!
-//     location.reload();
-// }
+function clearHighscores() {
+    console.log("called clearHighscores");
+    storagePlayerScores = [];
+    //setItem to empty array
+    window.localStorage.setItem("playerScores", JSON.stringify(storagePlayerScores));
+    //clear scores on screen
+    var scoresToClear = document.getElementById('displayed-scores-container');
+    if (scoresToClear !== null) {
+        scoresToClear.remove();
+        }
+}
+
+function goBack() {
+    console.log("called goBack");
+//TODO:  buttonViewHighscores.Disabled = false;
+    //re-display all of initial screen!
+    location.reload();
+}
 
 // listen for start button 
 buttonStart.addEventListener("click", startQuiz);
