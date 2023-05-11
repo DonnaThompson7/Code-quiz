@@ -20,9 +20,10 @@ var buttonClearHighscores;      // = document.querySelector(".clear-highscores-b
 
 
 function startQuiz() {
-        console.log("called startQuiz");
+    console.log("called startQuiz");
+    //disable buttonViewHighscores
     buttonViewHighscores.Disabled = true;
-        console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
+    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
     secondsLeft = 30;
     timerElement.textContent = secondsLeft;
     gameIsOver = false;
@@ -88,6 +89,9 @@ function checkAnswer(answers) {
 function gameOver() {
     console.log("called gameOver");
     gameIsOver = true;
+    //enable buttonViewHighscores
+    buttonViewHighscores.Disabled = false;
+    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
 
     //TODO: left-justify this screen
     main.innerHTML = `<h1>All done!</h1><div id="all-done"></div>`;
@@ -110,47 +114,52 @@ function submitScore() {
         };
     console.log("playerScore: " +  playerScore.currentInitials + " - " + playerScore.currentScore);
 
-    storagePlayerScores = JSON.parse(window.localStorage.getItem("playerScores"));
-    if (storagePlayerScores === null) {
-        storagePlayerScores = []
-    } 
-
+    //get high scores from local storage
+    getHighScores();
+ 
     if (storagePlayerScores === null) {
             storagePlayerScores = playerScore;
         } 
         else {
             storagePlayerScores.push(playerScore);
         };
-    window.localStorage.setItem("playerScores", JSON.stringify(storagePlayerScores));
+    setHighScores()
     viewHighscores();
 }
 
-
 function viewHighscores() {
     console.log("called viewHighscores");
+
+    //get high scores from local storage
+    getHighScores();
+    
+    //display high scores page title
     main.innerHTML = `<h1>Highscores</h1><div id="high-scores"></div>`;
+
+    //create html high scores container
     document.getElementById('high-scores').innerHTML += `<div id="displayed-scores-container"></div>`;
 
+    //create html individual high scores and display
     for (i=0; i < storagePlayerScores.length; i++) {
         console.log("storagePlayerScores: " +  storagePlayerScores[i].currentInitials + " - " + storagePlayerScores[i].currentScore);
         var tempString = storagePlayerScores[i].currentInitials + " - " + storagePlayerScores[i].currentScore;
         document.getElementById('displayed-scores-container').innerHTML += `<h2>${tempString}</h2><div id="displayed-scores"></div>`;
     }
-
-    // style high score with background color
-
-    //create Go Back button and listen for click 
+    //creates Go Back button and listen for click 
     document.getElementById('high-scores').innerHTML += `<button onclick="goBack()">Go Back</button>`;
 
-    //create 'Clear Highscores' and listen for click 
+    //creates 'Clear Highscores' and listen for click 
     document.getElementById('high-scores').innerHTML += `<button onclick="clearHighscores()">Clear Highscores</button>`;
 }
 
 function clearHighscores() {
     console.log("called clearHighscores");
+    //set var to empty array
     storagePlayerScores = [];
-    //setItem to empty array
-    window.localStorage.setItem("playerScores", JSON.stringify(storagePlayerScores));
+    
+    //set in local storage to empty array
+    setHighScores();
+
     //clear scores on screen
     var scoresToClear = document.getElementById('displayed-scores-container');
     if (scoresToClear !== null) {
@@ -160,9 +169,23 @@ function clearHighscores() {
 
 function goBack() {
     console.log("called goBack");
-//TODO:  buttonViewHighscores.Disabled = false;
+    //enable buttonViewHighscores
+    buttonViewHighscores.Disabled = false;
+    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
+
     //re-display all of initial screen!
     location.reload();
+}
+
+function getHighScores() {
+    storagePlayerScores = JSON.parse(window.localStorage.getItem("playerScores"));
+    if (storagePlayerScores === null) {
+        storagePlayerScores = []
+    } 
+}
+
+function setHighScores() {
+    window.localStorage.setItem("playerScores", JSON.stringify(storagePlayerScores));
 }
 
 // listen for start button 
@@ -174,10 +197,10 @@ buttonViewHighscores.addEventListener("click", viewHighscores);
 
 function init() {
     console.log("called init");
-     buttonViewHighscores.Disabled = false;
-     console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
-
+    //enable buttonViewHighscores
+    buttonViewHighscores.Disabled = false;
+    console.log("buttonViewHighscores.Disabled = " + buttonViewHighscores.Disabled);
 }
   
-// init();
+init();
 

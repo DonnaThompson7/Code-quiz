@@ -47,9 +47,25 @@ main {
     margin: 5px;
   }
 
+/* style container of multiple-choice answers as centered in a 50%-wide column */
 #answers {
   display: flex;
   flex-direction: column;
   width: 50%;
   margin: 0 auto;
+}
+
+/* style container of scores as centered in a narrow 20%-wide column */
+#displayed-scores-container {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: 10px auto;
+}
+
+/* style each score with background color and text as left-justified */
+#displayed-scores-container h2 {
+  background-color: lavender;
+  margin: 5px;
+  text-align: left;
 }
