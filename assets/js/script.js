@@ -12,10 +12,8 @@ var qIndex = 0;
 var storagePlayerScores;
 buttonViewHighscores.disabled = false;
 
-
-//separate html file contains a questions array of 5 question objects. 
-//Each question obj has 1 question, 4 answers, and 1 correct answer
-
+//a separate html file (questions.js) contains an array of 5 question objects. 
+//Each question object has 1 question, 4 answers, and 1 correct answer
 
 function startQuiz() {
     console.log("called startQuiz");
@@ -72,15 +70,17 @@ function checkAnswer(answers) {
 
     if (answers === questions[qIndex].answer) {
         console.log("send message Correct!");
-        //TODO: THIS IS NOT WORKING! update msg  and add a line above message with <hr />   
-        document.getElementById('answers').innerHTML += `<h4>Correct!</h4><div id="correct-msg"></div>`;
+        //display msg of "Correct!"   
+        document.getElementById('result').innerHTML = `<h3>Correct!</h3><div id="correct-msg"></div>`;
         }
     else {
+        //penalize player score by subtracting 10 seconds, due to incorrect answer
         secondsLeft = secondsLeft - 10;
-        //TODO: update msg  and add a line above message with <hr /> 
+
+        //display msg of "Incorrect!"   
         console.log("send message Incorrect!");
+        document.getElementById('result').innerHTML = `<h3>Incorrect!</h3><div id="incorrect-msg"></div>`;
         }
-    
     qIndex++;
     askQuestions()
 }
@@ -93,16 +93,16 @@ function gameOver() {
     buttonViewHighscores.disabled = false;
     console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 
-    //TODO: left-justify this screen
+    //All done and display final score
     main.innerHTML = `<h1>All done!</h1><div id="all-done"></div>`;
     document.getElementById('all-done').innerHTML += `<h2>Your final score is ${secondsLeft}</h2><div id="final-score"></div>`;
+    document.getElementById('result').innerHTML = `<h3></h3>`;
 
-    //create box to input initials  - use submit special type of input?
+    //create box to input player's initials
     document.getElementById('all-done').innerHTML += `<label for="initials">Enter initials: </label><input type="text" id="initials" name="initials"></input>`;
     
-    //TODO: create submit button
+    //create submit button to save player's score
     document.getElementById('all-done').innerHTML += `<button onclick="submitScore()">Submit</button>`;
-
 }
 
 function submitScore() {
@@ -182,6 +182,12 @@ function getHighScores() {
     if (storagePlayerScores === null) {
         storagePlayerScores = []
     } 
+    else {
+        //sort by score, in descending order
+        storagePlayerScores.sort(function(a, b) {
+        return parseFloat(b.currentScore) - parseFloat(a.currentScore);
+        });
+    }
 }
 
 function setHighScores() {
@@ -193,7 +199,6 @@ buttonStart.addEventListener("click", startQuiz);
 
 // listen for View Highscores button 
 buttonViewHighscores.addEventListener("click", viewHighscores);
-
 
 function init() {
     console.log("called init");
