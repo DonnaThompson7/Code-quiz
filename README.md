@@ -38,5 +38,5 @@ THEN I can save my initials and my score
 
 <br/>
 
-## Screenshot of Code Quiz:
-![Code Quiz](./assets/images/Code_Quiz_screenshot_placeholder.png)
+## Code Quiz homepage:
+![Code Quiz](./assets/images/Code_Quiz_screenshot.png)

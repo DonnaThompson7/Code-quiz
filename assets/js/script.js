@@ -16,11 +16,8 @@ buttonViewHighscores.disabled = false;
 //Each question object has 1 question, 4 answers, and 1 correct answer
 
 function startQuiz() {
-    console.log("called startQuiz");
-
     //disable buttonViewHighscores while actively playing game
     buttonViewHighscores.disabled = true;
-    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 
     secondsLeft = 30;
     timerElement.textContent = secondsLeft;
@@ -31,7 +28,6 @@ function startQuiz() {
 }
 
 function setTimer() {
-    console.log("called setTimer");
     // Sets interval in timerInterval variable
     var timerInterval = setInterval(function() {
         secondsLeft--;
@@ -46,8 +42,6 @@ function setTimer() {
 }
 
 function askQuestions() {
-    console.log("called askQuestions");
-    
     //check qIndex
     if (qIndex < questions.length) {
     
@@ -59,17 +53,12 @@ function askQuestions() {
         });
     } 
     else {
-        console.log("exiting askQuestions and calling gameOver");
         gameIsOver = true; 
     }
 }
 
 function checkAnswer(answers) {
-    console.log("called checkAnswer", answers);
-    console.log("correct answer = ", questions[qIndex].answer);
-
     if (answers === questions[qIndex].answer) {
-        console.log("send message Correct!");
         //display msg of "Correct!"   
         document.getElementById('result').innerHTML = `<h3>Correct!</h3><div id="correct-msg"></div>`;
         }
@@ -78,7 +67,6 @@ function checkAnswer(answers) {
         secondsLeft = secondsLeft - 10;
 
         //display msg of "Incorrect!"   
-        console.log("send message Incorrect!");
         document.getElementById('result').innerHTML = `<h3>Incorrect!</h3><div id="incorrect-msg"></div>`;
         }
     qIndex++;
@@ -86,12 +74,10 @@ function checkAnswer(answers) {
 }
 
 function gameOver() {
-    console.log("called gameOver");
     gameIsOver = true;
 
     //enable buttonViewHighscores
     buttonViewHighscores.disabled = false;
-    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 
     //All done and display final score
     main.innerHTML = `<h1>All done!</h1><div id="all-done"></div>`;
@@ -107,12 +93,10 @@ function gameOver() {
 
 function submitScore() {
     var initials = document.getElementById("initials").value;
-    console.log("called submitScore with " +  initials + " and " + secondsLeft);
     var playerScore = {
         currentInitials: initials,
         currentScore: secondsLeft
         };
-    console.log("playerScore: " +  playerScore.currentInitials + " - " + playerScore.currentScore);
 
     //get high scores from local storage
     getHighScores();
@@ -128,8 +112,6 @@ function submitScore() {
 }
 
 function viewHighscores() {
-    console.log("called viewHighscores");
-
     //get high scores from local storage
     getHighScores();
     
@@ -141,7 +123,6 @@ function viewHighscores() {
 
     //create html individual high scores and display
     for (i=0; i < storagePlayerScores.length; i++) {
-        console.log("storagePlayerScores: " +  storagePlayerScores[i].currentInitials + " - " + storagePlayerScores[i].currentScore);
         var tempString = storagePlayerScores[i].currentInitials + " - " + storagePlayerScores[i].currentScore;
         document.getElementById('displayed-scores-container').innerHTML += `<h2>${tempString}</h2><div id="displayed-scores"></div>`;
     }
@@ -153,7 +134,6 @@ function viewHighscores() {
 }
 
 function clearHighscores() {
-    console.log("called clearHighscores");
     //set var to empty array
     storagePlayerScores = [];
     
@@ -168,10 +148,8 @@ function clearHighscores() {
 }
 
 function goBack() {
-    console.log("called goBack");
     //enable buttonViewHighscores
     buttonViewHighscores.disabled = false;
-    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 
     //re-display all of initial screen!
     location.reload();
@@ -201,10 +179,8 @@ buttonStart.addEventListener("click", startQuiz);
 buttonViewHighscores.addEventListener("click", viewHighscores);
 
 function init() {
-    console.log("called init");
     //enable buttonViewHighscores
     buttonViewHighscores.disabled = false;
-    console.log("buttonViewHighscores.disabled = " + buttonViewHighscores.disabled);
 }
   
 init();
